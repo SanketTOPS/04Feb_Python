@@ -1,3 +1,0 @@
-ID:102
-Name:Nirav
-City:Baroda
