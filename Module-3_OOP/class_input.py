@@ -11,6 +11,9 @@ class studinfo:
         print("Name:", self.stnm)
 
 
-st = studinfo()
+"""st = studinfo()
 st.getdata()
-st.printdata()
+st.printdata()"""
+
+
+studinfo.getdata()
