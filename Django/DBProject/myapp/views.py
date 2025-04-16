@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .forms import *
 
 
@@ -12,3 +12,14 @@ def index(request):
         else:
             print(form.errors)
     return render(request, "index.html")
+
+
+def showdata(request):
+    stdata = studinfo.objects.all()
+    return render(request, "showdata.html", {"stdata": stdata})
+
+
+def deletedata(request, id):
+    stid = studinfo.objects.get(id=id)
+    studinfo.delete(stid)
+    return redirect("showdata")
