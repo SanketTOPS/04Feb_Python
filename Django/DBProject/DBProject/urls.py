@@ -24,4 +24,5 @@ urlpatterns = [
     path("", views.index),
     path("showdata/", views.showdata, name="showdata"),
     path("deletedata/<int:id>", views.deletedata),
+    path("updatedata/<int:id>", views.updatedata),
 ]
