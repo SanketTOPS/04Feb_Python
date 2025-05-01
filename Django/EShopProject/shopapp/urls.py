@@ -4,4 +4,5 @@ from shopapp import views
 
 urlpatterns = [
     path("", views.index),
+    path("addproduct/",views.addproduct),
 ]
