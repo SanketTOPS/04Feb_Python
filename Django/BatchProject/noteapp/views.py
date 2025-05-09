@@ -4,34 +4,55 @@ from .models import *
 from django.core.mail import send_mail
 import random
 from BatchProject import settings
+from django.contrib.auth import logout
 
 
 # Create your views here.
 def index(request):
-    return render(request, "index.html")
+    user = request.session.get("user")
+    return render(request, "index.html", {"user": user})
 
 
 def notes(request):
-    return render(request, "notes.html")
+    user = request.session.get("user")
+    return render(request, "notes.html", {"user": user})
 
 
 def profile(request):
-    return render(request, "profile.html")
+    user = request.session.get("user")
+    return render(request, "profile.html", {"user": user})
 
 
 def about(request):
-    return render(request, "about.html")
+    user = request.session.get("user")
+    return render(request, "about.html", {"user": user})
 
 
 def contact(request):
-    return render(request, "contact.html")
+    user = request.session.get("user")
+    return render(request, "contact.html", {"user": user})
 
 
 def login(request):
-    return render(request, "login.html")
+    user = request.session.get("user")
+    msg = ""
+    if request.method == "POST":
+        unm = request.POST["username"]
+        pas = request.POST["password"]
+
+        user = Usersignup.objects.filter(username=unm, password=pas)
+        if user:
+            print("Login Successfull!")
+            request.session["user"] = unm
+            return redirect("notes")
+        else:
+            print("Error!Login faild...")
+            msg = "Error!Login faild..."
+    return render(request, "login.html", {"msg": msg, "user": user})
 
 
 def signup(request):
+    user = request.session.get("user")
     msg = ""
     if request.method == "POST":
         form = UsersignupForm(request.POST)
@@ -58,10 +79,11 @@ def signup(request):
             )
 
             return redirect("otpverify")
-    return render(request, "signup.html", {"msg": msg})
+    return render(request, "signup.html", {"msg": msg, "user": user})
 
 
 def otpverify(request):
+    user = request.session.get("user")
     print("OTP:", otp)
     msg = ""
     if request.method == "POST":
@@ -71,4 +93,9 @@ def otpverify(request):
         else:
             print("Error! Verification faild...")
             msg = "Error! Verification faild..."
-    return render(request, "otpverify.html", {"msg": msg})
+    return render(request, "otpverify.html", {"msg": msg, "user": user})
+
+
+def userlogout(request):
+    logout(request)
+    return redirect("/")
