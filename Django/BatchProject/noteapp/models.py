@@ -11,3 +11,18 @@ class Usersignup(models.Model):
     city = models.CharField(max_length=20)
     state = models.CharField(max_length=20)
     mobile = models.BigIntegerField()
+
+
+class Notes(models.Model):
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    username = models.ForeignKey(Usersignup, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    desc = models.TextField()
+    notefile = models.FileField(upload_to="NotesFiles")
+    statuschoice = [
+        ("Pending", "Pending"),
+        ("Approved", "Approved"),
+        ("Rejected", "Rejected"),
+    ]
+    status = models.CharField(max_length=10, choices=statuschoice)
+    updated_at = models.DateTimeField(blank=True, null=True)

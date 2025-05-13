@@ -1,2 +1,32 @@
 {% extends 'base.html' %}
 {% block title %}Notes{% endblock %}
+
+{% block body %}
+<div class="container my-3">
+    <h1 style="text-align: center;">Notes Submission</h1>
+    <hr>
+    {% if msg %}
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>{{msg}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Query Title</label>
+            <input type="text" name="title" class="form-control" id="exampleFormControlInput1">
+        </div>
+        <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Note Description</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" name="desc" rows="3"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Upload your File's</label>
+            <input class="form-control" name="notefile" type="file" id="formFile">
+        </div>
+        <button type="submit" class="btn btn-dark btn-lg">Submit Note</button>
+    </form>
+</div>
+{% endblock %}

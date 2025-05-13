@@ -5,6 +5,7 @@ from django.core.mail import send_mail
 import random
 from BatchProject import settings
 from django.contrib.auth import logout
+from datetime import datetime
 
 
 # Create your views here.
@@ -15,12 +16,36 @@ def index(request):
 
 def notes(request):
     user = request.session.get("user")
+    username = Usersignup.objects.get(username=user)
+    if request.method == "POST":
+        form = NotesForm(request.POST, request.FILES)
+        if form.is_valid():
+            cuser = form.save(commit=False)
+            # cuser.submitted_at = datetime.now()
+            cuser.status = "Pending"
+            cuser.username = username
+            cuser.save()
+            print("Your Notes has been submitted!")
+        else:
+            print(form.errors)
     return render(request, "notes.html", {"user": user})
 
 
 def profile(request):
+    msg = ""
     user = request.session.get("user")
-    return render(request, "profile.html", {"user": user})
+    userid = request.session.get("userid")
+    cuser = Usersignup.objects.get(id=userid)
+    if request.method == "POST":
+        form = UpdateForm(request.POST, instance=cuser)
+        if form.is_valid():
+            form.save()
+            print("Profile updated!")
+            return redirect("profile")
+        else:
+            print(form.errors)
+            msg = "Error! Something went wrong..."
+    return render(request, "profile.html", {"user": user, "cuser": cuser, "msg": msg})
 
 
 def about(request):
@@ -41,9 +66,12 @@ def login(request):
         pas = request.POST["password"]
 
         user = Usersignup.objects.filter(username=unm, password=pas)
+        userid = Usersignup.objects.get(username=unm)
+        print("Userid:", userid.id)
         if user:
             print("Login Successfull!")
             request.session["user"] = unm
+            request.session["userid"] = userid.id
             return redirect("notes")
         else:
             print("Error!Login faild...")
