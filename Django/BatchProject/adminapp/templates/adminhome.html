@@ -2,14 +2,136 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Home</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            min-height: 100vh;
+            background-color: #f1fdf4;
+        }
+
+        .sidebar {
+            width: 220px;
+            background-color: #2e7d32;
+            color: #fff;
+            padding: 20px;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 30px;
+            font-size: 22px;
+            text-align: center;
+        }
+
+        .sidebar a {
+            display: block;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 0;
+            margin: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #388e3c;
+            border-radius: 4px;
+            padding-left: 10px;
+        }
+
+        .main-content {
+            margin-left: 220px;
+            padding: 30px;
+            width: calc(100% - 220px);
+        }
+
+        .main-content h1 {
+            margin-bottom: 30px;
+            color: #2e7d32;
+        }
+
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 128, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 128, 0, 0.2);
+        }
+
+        .card a {
+            text-decoration: none;
+            color: #2e7d32;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .card a:hover {
+            color: #1b5e20;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                margin: 0;
+                width: 100%;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 
-<body style="background-color: rgb(193, 199, 114);">
-    <h1 style="text-align: center;">Welcome to Admin Home</h1>
-    <hr>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <a href="#">Dashboard</a>
+        <a href="allusers.html">All Users</a>
+        <a href="allnotes.html">All Notes</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <h1>Welcome, Admin</h1>
+
+        <div class="card-container">
+            <div class="card">
+                <a href="/adminapp/admin_alluser">View All Users</a>
+            </div>
+            <div class="card">
+                <a href="/adminapp/admin_allnotes">View All Notes</a>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

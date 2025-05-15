@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Notes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f1fdf4;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2e7d32;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 128, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #c8e6c9;
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            color: #2e7d32;
+            font-size: 16px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2e7d32;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #1b5e20;
+        }
+
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .approved {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .rejected {
+            background-color: #ffcdd2;
+            color: #c62828;
+        }
+
+        .pending {
+            background-color: #fff9c4;
+            color: #f9a825;
+        }
+
+        .action-btn {
+            padding: 6px 10px;
+            margin-right: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .approve-btn {
+            background-color: #81c784;
+            color: white;
+        }
+
+        .reject-btn {
+            background-color: #e57373;
+            color: white;
+        }
+
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+
+            th,
+            td {
+                font-size: 13px;
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .action-btn {
+                padding: 4px 8px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="/adminapp/adminhome" class="back-link">← Back to Dashboard</a>
+    <h1>All Notes Details</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Submitted At</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Notes</th>
+                <th>Status</th>
+                <th>User</th>
+                <th>Updated At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in allnotes %}
+            <tr>
+                <td>{{ i.id }}</td>
+                <td>{{ i.submitted_at }}</td>
+                <td>{{ i.title }}</td>
+                <td>{{ i.desc }}</td>
+                <td><a href="{{ i.notefile.url }}" target="_blank">Download</a></td>
+                <td>
+                    {% if i.status == 'Approved' %}
+                    <span class="status-badge approved">Approved</span>
+                    {% elif i.status == 'Rejected' %}
+                    <span class="status-badge rejected">Rejected</span>
+                    {% else %}
+                    <span class="status-badge pending">Pending</span>
+                    {% endif %}
+                </td>
+                <td>{{ i.username.username }}</td>
+                <td>{{ i.updated_at }}</td>
+                <td>
+                    <a href="#">
+                        <button class="action-btn approve-btn">Approve</button>
+                    </a>
+                    <a href="#">
+                        <button class="action-btn reject-btn">Reject</button>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+
+</html>

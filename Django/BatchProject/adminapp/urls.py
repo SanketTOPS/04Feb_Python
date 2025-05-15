@@ -3,5 +3,8 @@ from django.urls import path, include
 from adminapp import views
 
 urlpatterns = [
-    path("", views.adminhome),
+    path("", views.adminlogin),
+    path("adminhome/", views.adminhome, name="adminhome"),
+    path("admin_alluser/", views.admin_alluser, name="admin_alluser"),
+    path("admin_allnotes/", views.admin_allnotes, name="admin_allnotes"),
 ]

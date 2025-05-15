@@ -21,7 +21,6 @@ def notes(request):
         form = NotesForm(request.POST, request.FILES)
         if form.is_valid():
             cuser = form.save(commit=False)
-            # cuser.submitted_at = datetime.now()
             cuser.status = "Pending"
             cuser.username = username
             cuser.save()
