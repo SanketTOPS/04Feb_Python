@@ -173,10 +173,10 @@
                 <td>{{ i.username.username }}</td>
                 <td>{{ i.updated_at }}</td>
                 <td>
-                    <a href="#">
+                    <a href="/adminapp/approve_note/{{i.id}}">
                         <button class="action-btn approve-btn">Approve</button>
                     </a>
-                    <a href="#">
+                    <a href="/adminapp/reject_note/{{i.id}}">
                         <button class="action-btn reject-btn">Reject</button>
                     </a>
                 </td>
