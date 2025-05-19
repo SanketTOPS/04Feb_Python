@@ -54,6 +54,14 @@ def about(request):
 
 def contact(request):
     user = request.session.get("user")
+    if request.method == "POST":
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print("Your inquery has been submitted! ")
+            return redirect("contact")
+        else:
+            print(form.errors)
     return render(request, "contact.html", {"user": user})
 
 
