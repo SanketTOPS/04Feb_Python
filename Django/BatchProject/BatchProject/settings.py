@@ -39,7 +39,20 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "noteapp",
     "adminapp",
+    "social_django",  # django-allauth
 ]
+
+# django-allauth
+AUTHENTICATION_BACKENDS = (
+    "social_core.backends.google.GoogleOAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+# django-allauth
+LOGIN_URL = "login"
+LOGOUT_URL = "logout"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -49,6 +62,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # django-allauth
+    "social_django.middleware.SocialAuthExceptionMiddleware",
 ]
 
 ROOT_URLCONF = "BatchProject.urls"
@@ -63,10 +78,20 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # django-allauth
+                "social_django.context_processors.backends",
+                "social_django.context_processors.login_redirect",
             ],
         },
     },
 ]
+
+
+# Social Auth Google Configuration
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = (
+    "304583921748-5nfq9t5nklv7b1mq70q7m8pg3jsgibav.apps.googleusercontent.com"
+)
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
 
 WSGI_APPLICATION = "BatchProject.wsgi.application"
 
