@@ -6,6 +6,7 @@ import random
 from BatchProject import settings
 from django.contrib.auth import logout
 from datetime import datetime
+import requests
 
 
 # Create your views here.
@@ -105,13 +106,25 @@ def signup(request):
             # Email Send Code
             global otp
             otp = random.randint(1111, 9999)
-            sub = "Your OTP"
+            """sub = "Your OTP"
             msg = f"Dear User!\n\nThanks for signup\n\nYour one time password for verification is:{otp}.\n\nThanks & Regards\nNoteApp - Admin\nTOPS Technologies-Rajkot\n9724799469 | www.tops-int.com"
             from_email = settings.EMAIL_HOST_USER
             to_email = [request.POST["username"]]
             send_mail(
                 subject=sub, message=msg, from_email=from_email, recipient_list=to_email
-            )
+            )"""
+
+            # SMS OTP Sending
+            url = "https://www.fast2sms.com/dev/bulkV2"
+            querystring = {
+                "authorization": "KEodGZf5czOn3eCxJPkWAFHQUYtS86Rbmrv1MyuViag4hs7N2DujvzKSw5MN9mRryb3LC4DsIHiWph78",
+                "variables_values": f"{otp}",
+                "route": "otp",
+                "numbers": "6356497821,9104046620,7016215175,9664586378,6351568856",
+            }
+            headers = {"cache-control": "no-cache"}
+            response = requests.request("GET", url, headers=headers, params=querystring)
+            print(response.text)
 
             return redirect("otpverify")
     return render(request, "signup.html", {"msg": msg, "user": user})
